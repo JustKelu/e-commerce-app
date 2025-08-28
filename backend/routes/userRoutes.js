@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const authMiddleware = require('../middlewares/authMiddleware');
+const verifyToken = require('../middlewares/verifyToken');
 
-const profileUser = require("../controllers/profileUser");
+const { getProfile } = require("../controllers/myUser");
 
-const userCart = require('../controllers/userCart');
-const userAddCart = require('../controllers/userAddCart');
+const { getCart, addCart } = require('../controllers/myCart');
 
-router.get('/profile', authMiddleware, profileUser);
-router.get('/cart', authMiddleware, userCart); //da finire
-router.get('/add-cart', authMiddleware, userAddCart);
+router.get('/profile', verifyToken, getProfile);
+router.get('/cart', verifyToken, getCart);
+router.post('/add-cart', verifyToken, addCart);
 
 module.exports = router;

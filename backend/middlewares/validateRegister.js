@@ -16,7 +16,7 @@ const validations = [
         minNumbers: 1,
         minSymbols: 1
     }).withMessage("Password too weak"),
-    body("userType").isIn(['business', 'user']).withMessage("Invalid user type"),
+    body("userType").isIn(['business', 'customer']).withMessage("Invalid user type"),
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

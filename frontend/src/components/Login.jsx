@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+    const { setIsSignIn } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -9,11 +11,9 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const token = localStorage.getItem("token");
             const response = await fetch("http://localhost:8000/api/auth/login", {
                 method: "POST",
                 headers: {
-                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json",
                 }, 
                 body: JSON.stringify({
@@ -26,6 +26,7 @@ export default function Login() {
                 const data = await response.json();
                 localStorage.removeItem("token");
                 localStorage.setItem("token", data.token);
+                setIsSignIn(true);
                 console.log(data.token)
             } else {
                 if (response.status == 401) {

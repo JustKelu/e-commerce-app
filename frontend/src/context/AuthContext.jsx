@@ -15,7 +15,7 @@ export const AuthProvider = ({children}) => {
             if (!token) return;
             const response = await fetch("http://localhost:8000/api/auth/verify-token", {
                 headers: {
-                    "Authorization": `Beraer ${token}`,
+                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json",
                 }
             });
@@ -34,6 +34,7 @@ export const AuthProvider = ({children}) => {
     return (
         <AuthContext.Provider value={{
             isSignIn,
+            setIsSignIn,
         }}>
             {children}
         </AuthContext.Provider>

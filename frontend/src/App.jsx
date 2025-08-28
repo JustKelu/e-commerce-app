@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
+import Cart from './components/Cart';
 import Support from './components/Support';
 import NavBar from './components/NavBar';
 
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/cart' element={<Cart/>}/>
           <Route path='/support' element={<Support/>}/>
         </Routes>
       </BrowserRouter>

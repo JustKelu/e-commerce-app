@@ -16,19 +16,6 @@ export default function Register() {
         e.preventDefault();
         try {
             const checkBox = document.getElementById('account-type');
-            const userData = {
-                name: name,
-                surname: surname,
-                addressStreet: address,
-                addressNumber: parseInt(addressNumber),
-                addressCity: addressCity,
-                addressZip: addressZip,
-                phoneNumber: phone,
-                email: email,
-                password: password,
-                userType: checkBox.checked ? "customer" : "user",
-            };
-            console.log('Sending userData:', userData);
             await fetch('http://localhost:8000/api/auth/register', {
                 method: "POST",
                 headers: {
@@ -44,7 +31,7 @@ export default function Register() {
                     phoneNumber: phone,
                     email: email,
                     password: password,
-                    userType: checkBox.checked ? "business" : "user",
+                    userType: checkBox.checked ? "business" : "customer",
                 }),
             });
         } catch (err) {
