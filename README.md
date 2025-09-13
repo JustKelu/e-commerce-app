@@ -1,152 +1,113 @@
-# 🛍️ Full-Stack E-Commerce App
+## 📦 Overview
+This repository contains a **monorepo** for an **E-commerce system** with two main applications:
 
-Un progetto **full-stack** per la gestione di un e-commerce, sviluppato con **Node.js**, **Express**, **PostgreSQL**, **React**, **Vite** e **Context API**.
+- **Website** → frontend + backend for the e-commerce site
+- **Adminshell** → frontend + backend for the administrative panel
+- **Database** → PostgreSQL managed with Docker
 
-> 🚧 **Stato del progetto**: Work in Progress  
-> Sto sviluppando questo progetto passo dopo passo, concentrandomi sulla creazione di un backend robusto e di un frontend scalabile.
-
----
-
-## 📌 Funzionalità attuali
-
-### **Backend**
-- Registrazione e login utente con sessioni tramite **JWT**
-- Sicurezza affidata ad **Helmet**
-- Middleware per la validazione dei dati (**express-validator**)
-- Architettura modulare con **controllers**, **services**, **repositories** e **middlewares**
-- Hashing sicuro delle password con **bcrypt**
-- Logging delle richieste con **Morgan**
-- Gestione carrello, prodotti e utenti business/customer
-
-### **Frontend**
-- Struttura con **React + Vite**
-- **React Context API** per l'autenticazione globale
-- Componenti principali: Home, Login, Register
-- Routing di base configurato
+Everything is orchestrated with **Docker Compose**.
 
 ---
 
-## 🚀 Tecnologie utilizzate
-
-**Frontend**
-- React + Vite
-- Context API
-- React Router
-
-**Backend**
-- Node.js + Express
-- PostgreSQL
-- JWT
-- Helmet
-- Cors
-- Express-validator
-- Bcrypt
-- Morgan
-
----
-
-## 📂 Struttura del progetto
-
+## 🗂 Project Structure
 ```
-e-commerce/
-├── backend/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── repositories/
-│   ├── routes/
-│   ├── services/
-│   ├── utils/
-│   ├── .env
-│   ├── package.json
-│   └── server.js
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── vite.config.js
+project/
+├── apps/
+│   ├── website/
+│   │   ├── backend/   # Express backend
+│   │   └── frontend/  # Frontend (Vite/React or similar)
+│   ├── adminshell/
+│   │   ├── backend/   # Express backend for admin panel
+│   │   └── frontend/  # Static frontend served with live-server
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+├── .env
 └── README.md
 ```
 
 ---
 
-## 🛠️ Requisiti
-
-- [Node.js](https://nodejs.org/) (consigliato v18+)
-- [npm](https://www.npmjs.com/)
-- [PostgreSQL](https://www.postgresql.org/)
+## ⚙️ Requirements
+- **Docker** >= 20.x
+- **Docker Compose** >= 2.x
+- Node.js (only if you want to develop without Docker)
 
 ---
 
-## ⚡ Come avviare il progetto
+## 🚀 Development Setup
 
-### 1. Clona il repository
+1. Create a `.env` file in the root directory with the required variables:
+   ```env
+   DB_HOST=database
+   DB_PORT=5432
+   DB_NAME=mydb
+   DB_USER=myuser
+   DB_PASSWORD=mypassword
+   ```
 
+2. Start the containers:
+   ```bash
+   docker compose -f docker-compose.dev.yml up --build
+   ```
+
+3. Available services:
+   - Website frontend → [http://localhost:3000](http://localhost:3000)
+   - Website backend → [http://localhost:5002](http://localhost:5002)
+   - Admin frontend → [http://localhost:8081](http://localhost:8081)
+   - Admin backend → [http://localhost:5001](http://localhost:5001)
+   - PostgreSQL Database → `localhost:5432`
+
+---
+
+## 🗄 Data Persistence
+The database uses a **Docker volume** called `postgres_data`:
+```yaml
+database:
+  volumes:
+    - postgres_data:/var/lib/postgresql/data
+```
+➡️ This means data persists even after rebuilding containers.
+
+If you want to reset the data:
 ```bash
-git clone https://github.com/JustKelu/e-commerce.git
-cd e-commerce
-```
-
-### 2. Configura le variabili d'ambiente
-
-Crea un file `.env` nella cartella `backend` e imposta le seguenti variabili:
-
-```
-JWT_SECRET=your_jwt_secret
-PORT=5000
-PSW_DB=your_postgres_password
-```
-
-### 3. Avvia il backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-### 4. Avvia il frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
+docker compose -f docker-compose.dev.yml down -v
 ```
 
 ---
 
-## 📄 Esempio di rotta API
-
-```http
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "email": "test@example.com",
-  "password": "password123"
-}
-```
+## 🔐 Security Notes
+- **Never commit your `.env` files** → they are already excluded by `.gitignore`.
+- Credentials remain local; only the project structure is published on GitHub.
+- In production, always use strong credentials and avoid exposing the database directly to the internet.
 
 ---
 
-## 📃 .gitignore consigliato
-
-```
-# Node
-node_modules/
-.env
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-```
+## 🏗 Production Mode
+The file `docker-compose.prod.yml` is currently **empty** and should be completed in the future. 
+It may include optimized builds, reverse proxy with Nginx, and HTTPS certificates.
 
 ---
 
-## 📝 Note
+## 📜 Useful Commands
+- Start development:
+  ```bash
+  docker compose -f docker-compose.dev.yml up --build
+  ```
+- Stop containers:
+  ```bash
+  docker compose -f docker-compose.dev.yml down
+  ```
+- Stop and remove containers + reset data:
+  ```bash
+  docker compose -f docker-compose.dev.yml down -v
+  ```
 
-- **Non committare il file `.env`**: aggiungi `.env` a `.gitignore`.
-- Se vuoi contribuire, apri una issue o una pull request!
-- Il progetto è in fase di sviluppo: alcune funzionalità potrebbero cambiare o essere migliorate
+---
+
+## 📄 License
+This project is licensed under the **Business Source License 1.1 (BSL 1.1)**.
+
+- ✅ You may view and study the code.
+- ✅ You may use it for personal, educational, or non-commercial purposes.
+- ❌ Commercial use, including integrating this code into products for profit, is **not allowed without written permission** from the author.
+- 📩 For commercial licensing requests, contact: **luca.oliva.dev@gmail.com**

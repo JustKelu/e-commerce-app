@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Card Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <!-- Header -->
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard - Gift Cards</h1>
+    <p class="text-gray-600">Gestisci le gift card generate e monitorane lo stato</p>
+  </header>
+
+  <!-- Sezione generazione -->
+  <section class="mb-8">
+    <div class="bg-white shadow rounded-xl p-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Genera nuova Gift Card</h2>
+      <form id="keygen-form" class="flex space-x-4">
+        <select id="card-format" class="border rounded-lg px-3 py-2">
+          <option value="" disabled selected>Seleziona un formato</option>
+          <option value="5">€5</option>
+          <option value="10">€10</option>
+          <option value="25">€25</option>
+          <option value="50">€50</option>
+          <option value="100">€100</option>
+        </select>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow">
+          Genera
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Tabella gift card -->
+  <section>
+    <div class="bg-white shadow rounded-xl p-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Gift Card Generate</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-200 text-left text-gray-700">
+              <th class="px-4 py-2">Codice</th>
+              <th class="px-4 py-2">Valore</th>
+              <th class="px-4 py-2">Stato</th>
+              <th class="px-4 py-2">Data</th>
+            </tr>
+          </thead>
+          <tbody id="giftTable">
+            <!-- Le righe verranno popolate via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script src="./scripts/keygen.js"></script>
+
+</body>
+</html>
