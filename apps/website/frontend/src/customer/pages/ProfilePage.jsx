@@ -38,7 +38,7 @@
                         </div>
                         
                         <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-3">Modifica dati personali</h2>
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">I miei dati</h2>
                             <p className="text-gray-600 mb-4 text-sm leading-relaxed">Aggiungi o modifica i tuoi dati personali</p>
                             <button 
                             onClick={() => navigate("/ship-addresses")} 
@@ -49,7 +49,7 @@
                         </div>
                         
                         <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-3">Modifica credenziali</h2>
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">Le mie credenziali</h2>
                             <p className="text-gray-600 mb-4 text-sm leading-relaxed">Cambia la tua password o le impostazioni di sicurezza.</p>
                             <button 
                             onClick={() => navigate("/profile")} 

@@ -1,9 +1,42 @@
+import { useState, useEffect } from "react";
+import { fetchWithAuth } from "../../shared/api/fetchApi";
 import { Link } from "react-router-dom";
 import { Bell, ShoppingBag, UserRound, Store } from "lucide-react";
-import { useState } from "react";
+import NotificationsCards from "./NotificationsCards";
 
 export default function BusinessNav() {
     const [open, setOpen] = useState(false);
+
+    const [ notifications, setNotifications ] = useState([]);
+
+    useEffect(() => {
+        getNotifications();
+    }, [])
+
+    const getNotifications = async () => {
+        try {
+            const response = await fetchWithAuth('/api/business/notifications');
+            console.log(response)
+            const notifications = await response.json();
+            console.log(notifications);
+            setNotifications(notifications.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const readNoitifications = async () => {
+        try {
+            const response = await fetchWithAuth('/api/business/notifications/read-all', {
+                method: 'POST'
+            });
+            if (response.ok) {
+                setNotifications(notifications.map(n => ({ ...n, read: true })));
+            }
+        } catch (err) {
+            console.log(err);
+        } 
+    }
 
     return (
         <nav className="flex justify-between items-center px-6 py-4 bg-white shadow-md relative">
@@ -40,26 +73,7 @@ export default function BusinessNav() {
                         <div className="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-50">
                             <h2 className="font-semibold mb-2">Notifiche</h2>
                             <ul className="divide-y divide-gray-200 text-sm">
-                                <li className="py-2">
-                                    <p className="font-medium">📦 Nuovo ordine ricevuto</p>
-                                    <p className="text-gray-600">Hai ricevuto un nuovo ordine #1042 da Mario Rossi</p>
-                                    <span className="text-xs text-gray-400">2 min fa</span>
-                                </li>
-                                <li className="py-2">
-                                    <p className="font-medium">⏳ Ordine in attesa</p>
-                                    <p className="text-gray-600">L'ordine #1039 deve essere spedito entro 24h</p>
-                                    <span className="text-xs text-gray-400">1 ora fa</span>
-                                </li>
-                                <li className="py-2">
-                                    <p className="font-medium">🛒 Prodotto in esaurimento</p>
-                                    <p className="text-gray-600">Sneakers X (5 pezzi rimasti)</p>
-                                    <span className="text-xs text-gray-400">Ieri</span>
-                                </li>
-                                <li className="py-2">
-                                    <p className="font-medium">💳 Pagamento ricevuto</p>
-                                    <p className="text-gray-600">Nuovo payout: €1.250 inviato</p>
-                                    <span className="text-xs text-gray-400">2 giorni fa</span>
-                                </li>
+                                {notifications ? <NotificationsCards notifications={notifications}/> : <h2>Nessuna notifica</h2>}
                             </ul>
                             <div className="text-center mt-3">
                                 <Link to="/notifications" className="text-blue-600 text-sm font-medium hover:underline">

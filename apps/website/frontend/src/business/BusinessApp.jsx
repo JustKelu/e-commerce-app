@@ -5,6 +5,7 @@ import BusinessNav from './components/BusinessNav';
 import DashboardPage from './pages/DashboardPage';
 import ProfitPage from './pages/ProfitPage';
 import EditPage from './pages/EditPage';
+import AddPage from './pages/AddPage';
 import ShowcasePage from './pages/ShowcasePage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import LoginPage from '../shared/pages/LoginPage';
@@ -21,6 +22,7 @@ export default function BusinessApp() {
           <Route path='/profit' element={<PrivateRoute allowedRoles={["business"]}><ProfitPage/></PrivateRoute>}/>
           <Route path='/' element={<PrivateRoute allowedRoles={["business"]}><DashboardPage/></PrivateRoute>}/>
           <Route path='/showcase' element={<PrivateRoute allowedRoles={["business"]}><ShowcasePage/></PrivateRoute>}/>
+          <Route path='/add' element={<PrivateRoute allowedRoles={["business"]}><AddPage/></PrivateRoute>}/>
           <Route path='/edit/:id' element={<PrivateRoute allowedRoles={["business"]}><EditPage/></PrivateRoute>}/>
         </Routes>
       </BrowserRouter>

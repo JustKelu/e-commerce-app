@@ -15,8 +15,6 @@ export default function ProductCards() {
         const url = searchQuery 
             ? `/api/user/products?search=${encodeURIComponent(searchQuery)}`
             : `/api/user/products`;
-        
-        console.log(url);
 
         const response = await fetchApi(url);
         return response.json();
@@ -48,30 +46,26 @@ export default function ProductCards() {
                 }),
                 credentials: 'include',
             });
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.message);
-            }
         } catch (err) {
             console.log(err);
         }
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
             {products.map(product => (
-                <div key={product.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 hover:border-gray-200">
+                <div key={product.id} className="bg-white w-5/5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 hover:border-gray-200">
                     {/* Image Container */}
                     <div className="relative overflow-hidden">
                         <img 
                             src={product.image_url} 
                             alt={product.name} 
-                            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="w-full h-64 object-contain group-hover:scale-105 transition-transform duration-500"
                         />
                         
                         {/* Price badge overlay */}
                         <div className="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold shadow-lg backdrop-blur-sm">
-                            ${product.price}
+                            €{product.price}
                         </div>
                         
                         {/* Quick view overlay */}
@@ -108,7 +102,7 @@ export default function ProductCards() {
                         <div className="flex items-center justify-between">
                             <div className="flex items-baseline gap-2">
                                 <span className="text-2xl font-bold text-gray-900">
-                                    ${product.price}
+                                    €{product.price}
                                 </span>
                             </div>
                             <button 

@@ -5,107 +5,15 @@ export default function HomePage() {
    
     return (
         <div className="bg-gray-50 min-h-screen">
-            {/* Categories Section */}
-            <div className="bg-white shadow-sm border-t">
-                <div className="max-w-7xl mx-auto px-6 py-12">
-                    <h2 className="text-3xl font-bold mb-10 text-gray-900 text-center">Shop by Category</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                        {[
-                            { name: 'Electronics', color: 'from-blue-500 to-blue-600' },
-                            { name: 'Fashion', color: 'from-pink-500 to-rose-500' },
-                            { name: 'Home & Garden', color: 'from-green-500 to-emerald-500' },
-                            { name: 'Books & Media', color: 'from-purple-500 to-violet-500' },
-                            { name: 'Sports', color: 'from-orange-500 to-red-500' },
-                            { name: 'Health & Beauty', color: 'from-teal-500 to-cyan-500' }
-                        ].map((category, index) => (
-                            <div key={index} className="group cursor-pointer">
-                                <div className="bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-xl text-center group-hover:-translate-y-2">
-                                    
-                                    <h3 className="font-semibold text-gray-900 group-hover:text-gray-700 transition-colors">
-                                        {category.name}
-                                    </h3>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
             {/* Advanced Filters Bar */}
-            <div className="bg-white border-t border-b border-gray-100 sticky top-0 z-20 shadow-sm">
-                <div className="max-w-7xl mx-auto px-6 py-4">
-                    <div className="flex flex-wrap gap-4 items-center justify-between">
-                        <div className="flex flex-wrap gap-3 items-center">
-                            <select className="border border-gray-200 rounded-xl px-4 py-2.5 bg-white text-sm font-medium focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:outline-none transition-all">
-                                <option>All Categories</option>
-                                <option>Electronics</option>
-                                <option>Fashion & Accessories</option>
-                                <option>Home & Garden</option>
-                                <option>Books & Entertainment</option>
-                                <option>Sports</option>
-                                <option>Health & Beauty</option>
-                            </select>
-                            <select className="border border-gray-200 rounded-xl px-4 py-2.5 bg-white text-sm font-medium focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:outline-none transition-all">
-                                <option>Any Price</option>
-                                <option>Under $25</option>
-                                <option>$25 - $50</option>
-                                <option>$50 - $100</option>
-                                <option>$100 - $200</option>
-                                <option>Over $200</option>
-                            </select>
-                            <select className="border border-gray-200 rounded-xl px-4 py-2.5 bg-white text-sm font-medium focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:outline-none transition-all">
-                                <option>Best Match</option>
-                                <option>Price: Low to High</option>
-                                <option>Price: High to Low</option>
-                                <option>Customer Reviews</option>
-                                <option>Newest First</option>
-                                <option>Best Sellers</option>
-                            </select>
-                            <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl">
-                                Apply
-                            </button>
-                            <button className="text-gray-500 hover:text-gray-700 text-sm font-medium">
-                                Clear all
-                            </button>
-                        </div>
-                        <div className="flex items-center gap-6 text-sm">
-                            <div className="text-gray-600">
-                                <span className="font-semibold text-gray-900">2,847,392</span> results
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Prime</span>
-                                <div className="w-8 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full relative">
-                                    <div className="w-3 h-3 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             {/* Main Products Section */}
             <div className="max-w-7xl mx-auto px-6 py-8">
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
-                        <p className="text-gray-600">Discover trending items and customer favorites</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-600 font-medium">View:</span>
-                            <div className="flex bg-gray-100 rounded-lg p-1">
-                                <button className="p-2 bg-white rounded-md shadow-sm text-blue-600">
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                    </svg>
-                                </button>
-                                <button className="p-2 text-gray-500 hover:text-gray-700">
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-2">I nostri prodotti</h2>
+                        <p className="text-gray-600">Esplora tra i prodotti di tendenza.</p>
                     </div>
                 </div>
                 

@@ -25,8 +25,6 @@ export default function CartPage() {
             
             const cartItems = data.cart;
 
-            console.log(cartItems);
-
             setCart(cartItems);
         } catch (err) {
             console.error("Error loading cart:", err);
@@ -68,7 +66,7 @@ export default function CartPage() {
                                     <img 
                                         src={product.image_url} 
                                         alt={product.name} 
-                                        className="w-20 h-20 object-cover rounded-md flex-shrink-0"
+                                        className="w-20 h-20 object-contain rounded-md flex-shrink-0"
                                     />
                                     <div className="flex-grow">
                                         <h2 className="text-lg font-semibold text-gray-900">{product.name}</h2>

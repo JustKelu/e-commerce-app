@@ -1,28 +1,27 @@
 const pool = require("../utils/database");
-const paymentService = require('../services/payments');
-const orderService = require('../services/orders');
-const shipmentService = require('../services/shipments');
+const paymentService = require('../services/customer/payments');
+const orderService = require('../services/customer/orders');
+const shipmentService = require('../services/customer/shipments');
 
 const cartRepo = (userId) => {
     const getCartRepo = async () => {
         const query = `
-            SELECT products.seller_id, products.name, carts.quantity, products.price, products.id, products.image_url
-            FROM carts
-            INNER JOIN products ON carts.product_id = products.id 
-            WHERE carts.user_id = $1
+            SELECT p.seller_id, p.name, c.quantity, p.price, p.id, pi.image_url
+            FROM carts c
+            INNER JOIN products p ON c.product_id = p.id
+            INNER JOIN product_images pi ON p.id = pi.product_id AND pi.is_primary = true
+            WHERE c.user_id = $1
             ` 
 
         const values = [userId];
 
         try {
             const data = await pool.query(query, values);
-
             return data.rows;
         } catch (err) {
             console.log(`Error on getting cart items from user ${userId}: ${err}`);
             return {error: "Internal error."};
         }
-
     }
 
     const addCartRepo = async (userData) => {

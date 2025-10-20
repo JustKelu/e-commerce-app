@@ -1,6 +1,6 @@
 const loginAdminService = require('../../services/auth/loginAdminService');
 
-const loginAdmin = async (req, res, next) => {
+const login = async (req, res, next) => {
     try {
         const adminCredentials = {
             email: req.body.email,
@@ -31,4 +31,11 @@ const loginAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = loginAdmin;
+const authVerify = (req, res, next) => {
+    res.status(200).json({adminId: req.adminId, adminType: req.adminType});
+}
+
+module.exports = {
+    login,
+    authVerify,
+};

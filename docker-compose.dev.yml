@@ -9,6 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
   website-backend:
     build: 
@@ -57,12 +58,13 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
   admin-frontend:
-    build:
+    build: 
       context: ./apps/adminshell/frontend
       dockerfile: Dockerfile.dev
     volumes:
       - ./apps/adminshell/frontend:/app
-    command: ["npx", "live-server", "--host=0.0.0.0", "--port=8080"]
+      - /app/node_modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
     ports:
       - "8081:8080"
 volumes:

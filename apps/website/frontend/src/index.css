@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  zoom: 1.03;
+  box-sizing: border-box;
+}

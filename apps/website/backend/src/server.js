@@ -5,10 +5,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
+const app = express();
 const PORT = process.env.PORT || 5000;
 const frontend = process.env.FRONTEND || "localhost";
 const frontendPORT = process.env.FRONTEND_PORT || 3000;
-const app = express();
 
 app.use(helmet());
 app.use(morgan('combined'));
@@ -40,4 +40,4 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log("Server online on port: " + PORT)
-})
+});

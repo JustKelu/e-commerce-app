@@ -68,23 +68,55 @@ export default function EditPage() {
     return (
     <div className="max-w-xl mx-auto border rounded-lg shadow-lg p-6 space-y-4">
       {/* Immagine */}
-      <div className="w-full">
-        <img
-          src={values.image_url}
-          alt={values.name}
-          className="w-full h-64 object-cover rounded-lg mb-2 cursor-pointer"
-          onClick={() => toggleEdit("image_url")}
-        />
-        {editable.image_url && (
-          <input
-            type="text"
-            value={values.image_url}
-            onChange={(e) => handleChange("image_url", e.target.value)}
-            className="w-full border rounded px-2 py-1"
-            autoFocus
-          />
-        )}
-      </div>
+      <div className="flex flex-col items-center">
+          {/* main image */}
+          <label className="w-64 h-64 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center overflow-hidden">
+            {previews.image1 ? (
+              <img
+                src={previews.image1}
+                alt="Anteprima principale"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-gray-400">Carica immagine principale</span>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => handleFile("image1", e.target.files[0])}
+            />
+          </label>
+
+          {/* thumbnails centrati */}
+          <div className="flex justify-center items-center gap-4 mt-5">
+            {[2, 3, 4].map((num) => {
+              const key = `image${num}`;
+              return (
+                <label
+                  key={key}
+                  className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden cursor-pointer"
+                >
+                  {previews[key] ? (
+                    <img
+                      src={previews[key]}
+                      alt={`Anteprima ${num}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-gray-400 text-sm">Immagine {num}</span>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => handleFile(key, e.target.files[0])}
+                  />
+                </label>
+              );
+            })}
+          </div>
+        </div>
 
       {/* Titolo */}
       <div onClick={() => toggleEdit("name")} className="cursor-pointer">

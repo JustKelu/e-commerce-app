@@ -6,6 +6,11 @@ export default function CheckoutPage() {
   const { state: cartData } = useLocation();
   const navigate = useNavigate();
 
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [privacyError, setPrivacyError] = useState(false);
+  
+  const [formError, setFormError] = useState(false);
+
   const [shipmentData, setShipmentData] = useState({});
   const [productsData, setProductsData] = useState({
     items: cartData?.[0] || [],
@@ -30,7 +35,30 @@ export default function CheckoutPage() {
     }
   }
 
+  const checkForm = () => {
+    if (
+      !shipmentData.name ||
+      !shipmentData.surname ||
+      !shipmentData.address_street ||
+      !shipmentData.address_number ||
+      !shipmentData.address_city ||
+      !shipmentData.address_zip ||
+      !shipmentData.province
+    ) return true;
+    return false;
+  }
+
   const handlePayment = async () => {
+    if (!privacyAccepted) {
+      setPrivacyError(true);
+      return;
+    }
+
+    const hasFormErrors = checkForm();
+    setFormError(checkForm());
+
+    if (hasFormErrors) return;
+
     try {
       const response = await fetchWithAuth("/api/user/checkout", {
         method: "POST",
@@ -149,6 +177,7 @@ export default function CheckoutPage() {
                     value={shipmentData.province || ''}
                     onChange={(e) => setShipmentData(prev => ({...prev, province: e.target.value}))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
                   ></input>
                 </div>
                 
@@ -165,6 +194,14 @@ export default function CheckoutPage() {
                   />
                 </div>
               </div>
+              {formError ?
+                <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      Compila tutti i campi per continuare.
+                    </span>
+                </div> :
+                null
+              }
             </div>
 
             {/* Sezione Metodo di Pagamento */}
@@ -219,7 +256,7 @@ export default function CheckoutPage() {
                     <img 
                       src={product.image_url}
                       alt={product.name}
-                      className="w-12 h-12 object-cover rounded-md"
+                      className="w-12 h-12 object-contain rounded-md"
                     />
                     <div className="flex-1">
                       <h4 className="text-sm font-medium text-gray-900">{product.name}</h4>
@@ -235,10 +272,6 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotale:</span>
                   <span>€{subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Spedizione:</span>
-                  <span>€9.99</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">IVA (22%):</span>
@@ -258,6 +291,8 @@ export default function CheckoutPage() {
                   <input 
                     type="checkbox" 
                     className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    checked={privacyAccepted}
+                    onChange={(e) => {setPrivacyAccepted(e.target.checked); setPrivacyError(!e.target.checked)}}
                   />
                   <span className="text-xs text-gray-600">
                     Accetto i <span className="text-blue-600 underline cursor-pointer">termini e condizioni</span> e 
@@ -266,17 +301,19 @@ export default function CheckoutPage() {
                 </label>
               </div>
               
+              {privacyError ?
+                <div className="mb-6">
+                    <span className="text-xs text-red-600">
+                      Accetta i termini e condizioni per continuare.
+                    </span>
+                </div> :
+                null
+              }
+
               {/* Pulsante conferma */}
               <button onClick={() => handlePayment()} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                 Conferma Ordine
               </button>
-              
-              {/* Sicurezza */}
-              <div className="mt-4 text-center">
-                <p className="text-xs text-gray-500">
-                  🔒 Pagamento sicuro SSL
-                </p>
-              </div>
             </div>
           </div>
         </div>
